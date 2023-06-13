@@ -1,0 +1,18 @@
+{% extends 'base_layout.html' %}
+
+{% block content %}
+<h1>Los usuarios</h1>
+
+<div id="user-display">
+    {% for appuser in appusers %}
+        <div class="card user-card" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">{{ appuser.first_name }} {{ appuser.last_name }}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">{{ appuser.username }}</h6>
+                <p class="card-text">{{ appuser.email }}</p>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+{% endblock  %}
