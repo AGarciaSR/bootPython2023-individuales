@@ -5,6 +5,7 @@ from .models import AppUser
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.http import HttpResponseRedirect
+from django.contrib.auth.hashers import make_password
 from .forms import UserForm
 
 
@@ -34,13 +35,21 @@ def user_form(request):
     if request.method == "POST":
         form = UserForm(request.POST)
         if form.is_valid():
-            if(form.save()):
-                new_id = User.objects.get(username=request.POST['username']).id
-                new_appuser = AppUser.objects.get(id = new_id)
-                new_appuser.ciudad = request.POST['ciudad']
-                new_appuser.edad = request.POST['edad']
-                new_appuser.save()
-                return HttpResponse("Gracias, el usuario ha sido agregado")
+            new_user = User()
+            new_user.username = form.cleaned_data['username']
+            new_user.password = make_password(form.cleaned_data['password'])
+            new_user.first_name = form.cleaned_data['first_name']
+            new_user.last_name = form.cleaned_data['last_name']
+            new_user.email = form.cleaned_data['email']
+            new_user.edad = form.cleaned_data['edad']
+            new_user.ciudad = form.cleaned_data['ciudad']
+            new_user.save()
+            new_id = User.objects.get(username=request.POST['username']).id
+            new_appuser = AppUser.objects.get(user_id = new_id)
+            new_appuser.ciudad = request.POST['ciudad']
+            new_appuser.edad = request.POST['edad']
+            new_appuser.save()
+            return HttpResponse("Gracias, el usuario ha sido agregado")
     else:
         form = UserForm()
 
