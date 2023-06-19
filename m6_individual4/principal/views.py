@@ -44,7 +44,7 @@ def user_form(request):
             new_user.edad = form.cleaned_data['edad']
             new_user.ciudad = form.cleaned_data['ciudad']
             new_user.save()
-            new_id = User.objects.get(username=request.POST['username']).id
+            new_id = User.objects.get(username = form.cleaned_data['username']).id
             new_appuser = AppUser.objects.get(user_id = new_id)
             new_appuser.ciudad = request.POST['ciudad']
             new_appuser.edad = request.POST['edad']
