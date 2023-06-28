@@ -1,0 +1,12 @@
+{% extends "base_layout.html" %}
+{% load static %}
+{% block cotitle %} Bienvenida {% endblock %}
+{% block content %}
+    <!-- Masthead-->
+    <header class="masthead bg-primary text-white text-center">
+        <div class="container d-flex align-items-center flex-column">
+            <img src="{% static 'assets/img/todolist.jpg' %}">
+            <p class="masthead-subheading font-weight-light mb-0">Qué bueno verte de vuelta, {{request.user.first_name}}</p>
+        </div>
+    </header>
+{% endblock %}
